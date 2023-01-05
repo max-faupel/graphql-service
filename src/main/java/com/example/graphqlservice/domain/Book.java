@@ -1,22 +1,22 @@
 package com.example.graphqlservice.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Document
 @Getter
 @Builder
 @NoArgsConstructor
 public class Book {
-    @Id
+    @org.springframework.data.annotation.Id
     private String id;
     private String name;
     private int pageCount;
-    @ManyToOne
+    @DBRef
     private Author author;
 
     public Book(String id, String name, int pageCount, Author author) {
