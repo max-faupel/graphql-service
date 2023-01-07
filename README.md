@@ -36,26 +36,15 @@ docker run -d --name mongo -e MONGO_INITDB_DATABASE=books -e MONGO_INITDB_ROOT_U
 # Mutations
 
 ```
-{
+mutation {
   createBook(createBookInput: {
     id: "book-4"
     name: "Learning GraphQL: Declarative Data Fetching for Modern Web Apps"
     pageCount: 185
-    createAuthorInput: [
-      {
-        id: "author-4"
-        firstName: "Eve"
-        lastName: "Porcello"
-      }
-      {
-        id: "author-5"
-        firstName: "Alex"
-        lastName: "Banks"
-      }
-    ]
-  }) {
+    authors: [{id: "author-4", firstName: "Eve", lastName: "Porcello"}, {id: "author-5", firstName: "Alex"lastName: "Banks"}]
+  })
+  {
     id
     name
   }
-}
 ```
