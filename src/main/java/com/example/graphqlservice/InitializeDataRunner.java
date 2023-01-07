@@ -1,6 +1,7 @@
 package com.example.graphqlservice;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -37,12 +38,10 @@ public class InitializeDataRunner implements CommandLineRunner {
         authorRepository.save(authors.get(1));
         authorRepository.save(authors.get(2));
 
-        bookRepository.save(Book.builder().id("book-1").name("Harry Potter and the Philosopher's Stone").pageCount(223)
-                .author(authors.get(0)).build());
         bookRepository
-                .save(Book.builder().id("book-2").name("Moby Dick").pageCount(635).author(authors.get(1)).build());
-        bookRepository.save(Book.builder().id("book-3").name("Interview with the vampire").pageCount(371)
-                .author(authors.get(2)).build());
+                .save(new Book("book-1", "Harry Potter and the Philosopher's Stone", 223, Set.of(authors.get(0))));
+        bookRepository.save(new Book("book-2", "Moby Dick", 635, Set.of(authors.get(1))));
+        bookRepository.save(new Book("book-3", "Interview with the vampire", 371, Set.of(authors.get(2))));
     }
 
 }

@@ -1,6 +1,6 @@
 type Query {
   bookById(id: ID): Book
-  authorByName(authorInput: AuthorInput) : Author
+  authorByName(authorInput: AuthorInput): Author
 }
 
 input AuthorInput {
@@ -12,7 +12,7 @@ type Book {
   id: ID!
   name: String!
   pageCount: Int
-  author: Author!
+  authors: [Author]!
 }
 
 type Author {

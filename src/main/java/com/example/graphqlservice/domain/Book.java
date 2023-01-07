@@ -1,29 +1,30 @@
 package com.example.graphqlservice.domain;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Document
 @Getter
-@Builder
 @NoArgsConstructor
 public class Book {
-    @org.springframework.data.annotation.Id
+    @Id
     private String id;
     private String name;
     private int pageCount;
     @DBRef
-    private Author author;
+    private Set<Author> authors;
 
-    public Book(String id, String name, int pageCount, Author author) {
+    public Book(String id, String name, int pageCount, Set<Author> authors) {
         this.id = id;
         this.name = name;
         this.pageCount = pageCount;
-        this.author = Author.builder().id(author.getId()).firstName(author.getFirstName())
-                .lastName(author.getLastName()).build();
+        this.authors = authors.stream().collect(Collectors.toSet());
     }
 }
