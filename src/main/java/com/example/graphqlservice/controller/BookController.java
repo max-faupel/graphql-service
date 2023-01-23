@@ -1,5 +1,6 @@
 package com.example.graphqlservice.controller;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,11 @@ public class BookController {
     @Autowired
     public void setBookRepository(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+    }
+
+    @QueryMapping
+    public List<Book> bookList() {
+        return bookRepository.findAll();
     }
 
     @QueryMapping

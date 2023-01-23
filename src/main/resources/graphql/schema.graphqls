@@ -12,6 +12,7 @@ type Book {
 }
 
 type Query {
+  bookList: [Book]
   bookById(id: ID): Book
   authorByName(authorInput: AuthorInput): Author
 }
