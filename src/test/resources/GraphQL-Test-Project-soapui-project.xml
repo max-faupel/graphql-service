@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="de50d9c3-1e9e-4e6a-ad20-e8a3efee1fc6" activeEnvironment="Default"
+  name="GraphQL Test Project" resourceRoot="" soapui-version="5.7.0" abortOnError="false"
+  runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting
+      id="com.eviware.soapui.impl.wsdl.actions.iface.tools.soapui.TestRunnerAction@values-local"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="Report Format(s)" value=""/>
+  <con:entry key="Host:Port" value=""/>
+  <con:entry key="Export JUnit Results" value="false"/>
+  <con:entry key="Export All" value="false"/>
+  <con:entry key="Save After" value="false"/>
+  <con:entry key="Add Settings" value="false"/>
+  <con:entry key="WSS Password Type" value=""/>
+  <con:entry key="TestSuite" value="BookServiceTest"/>
+  <con:entry key="Endpoint" value=""/>
+  <con:entry key="Select Report Type" value=""/>
+  <con:entry key="System Properties" value=""/>
+  <con:entry key="Password" value=""/>
+  <con:entry key="Print Report" value="false"/>
+  <con:entry key="Open Report" value="false"/>
+  <con:entry key="Export JUnit Results with test properties" value="false"/>
+  <con:entry key="Global Properties" value=""/>
+  <con:entry key="Project Properties" value=""/>
+  <con:entry key="Project Password" value=""/>
+  <con:entry key="TestCase" value="GraphqlTestCase"/>
+  <con:entry key="Username" value=""/>
+  <con:entry key="user-settings.xml Password" value=""/>
+  <con:entry key="TestRunner Path" value=""/>
+  <con:entry key="Environment" value="Default"/>
+  <con:entry key="Coverage Report" value="false"/>
+  <con:entry key="Enable UI" value="false"/>
+  <con:entry key="Root Folder" value=""/>
+  <con:entry key="Ignore Errors" value="false"/>
+  <con:entry key="Domain" value=""/>
+  <con:entry key="Tool Args" value=""/>
+  <con:entry key="Save Project" value="false"/>
+</xml-fragment>]]></con:setting>
+  </con:settings>
+  <con:interface xsi:type="con:RestService" id="ca45f76a-dea4-481a-b6d2-4a7536efecfc"
+    wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8080" type="rest"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:settings />
+    <con:definitionCache />
+    <con:endpoints>
+      <con:endpoint>http://localhost:8080</con:endpoint>
+    </con:endpoints>
+    <con:resource name="Graphql" path="/graphql" id="4d2346e3-12bb-4b22-82f6-3aca46471a69">
+      <con:settings />
+      <con:parameters />
+    </con:resource>
+  </con:interface>
+  <con:testSuite id="2114cc1b-b2a5-404f-af14-0566d883e2c8" name="BookServiceTest">
+    <con:description>TestSuite generated for REST Service [http://localhost:8080]</con:description>
+    <con:settings />
+    <con:runType>SEQUENTIAL</con:runType>
+    <con:testCase id="b54d75bc-4e37-4d47-92ae-5594ba6f0216" failOnError="true"
+      failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetBooksTest"
+      searchProperties="true">
+      <con:description>TestCase generated for REST Resource [Graphql] located at [/graphql]</con:description>
+      <con:settings />
+      <con:testStep type="graphqltestrequest" name="BookList Request"
+        id="72800209-566d-41e9-82d8-ab21b213d605">
+        <con:settings />
+        <con:config xsi:type="con:GraphQLTestRequest" id="78e1898f-6c80-4555-ae2e-6fbc4e748c20"
+          name="BookList Request" method="POST"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">
+              &lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>http://localhost:8080/graphql</con:endpoint>
+          <con:request>{"query":"query {\n bookList {\n id\n name\n pageCount\n authors {\n
+            firstName\n lastName\n }\n }\n}","operationName":null,"variables":null}</con:request>
+          <con:assertion type="JsonPath Count" id="a9eeb81e-4b8c-4111-b3af-66a70ed803de"
+            name="JsonPath Count">
+            <con:configuration>
+              <path>$.data.bookList</path>
+              <content>3</content>
+              <allowWildcards>false</allowWildcards>
+              <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+              <ignoreComments>false</ignoreComments>
+            </con:configuration>
+          </con:assertion>
+          <con:credentials>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="transfer" name="BookId Transfer" id="5e8efebf-638d-42d0-b651-a26653cb6f6d">
+        <con:settings />
+        <con:config xsi:type="con:PropertyTransfersStep"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true"
+            ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+            <con:name>bookId</con:name>
+            <con:sourceType>Response</con:sourceType>
+            <con:sourceStep>BookList Request</con:sourceStep>
+            <con:sourcePath>$.data.bookList[0].id</con:sourcePath>
+            <con:targetType>bookId</con:targetType>
+            <con:targetStep>#TestCase#</con:targetStep>
+            <con:type>JSONPATH</con:type>
+            <con:targetTransferType>XPATH</con:targetTransferType>
+            <con:upgraded>true</con:upgraded>
+          </con:transfers>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="graphqltestrequest" name="BookById Request"
+        id="f0fad3d7-7df7-486e-8d3c-bca29c18ef52">
+        <con:settings />
+        <con:config xsi:type="con:GraphQLTestRequest" id="78e1898f-6c80-4555-ae2e-6fbc4e748c20"
+          name="BookById Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">
+              &lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:endpoint>http://localhost:8080/graphql</con:endpoint>
+          <con:request>{"query":"query {\n bookById(id: \"${#TestCase#bookId}\") {\n id\n name\n
+            pageCount\n authors {\n firstName\n lastName\n }\n
+            }\n}","operationName":null,"variables":null}</con:request>
+          <con:assertion type="JsonPath Match" id="7b64068a-bf79-4b64-aae3-afa955b86f94"
+            name="JsonPath Match">
+            <con:configuration>
+              <path>$.data.bookById.id</path>
+              <content>${#TestCase#bookId}</content>
+              <allowWildcards>false</allowWildcards>
+              <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+              <ignoreComments>false</ignoreComments>
+            </con:configuration>
+          </con:assertion>
+          <con:credentials>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+        </con:config>
+      </con:testStep>
+      <con:properties>
+        <con:property>
+          <con:name>bookId</con:name>
+          <con:value>book-1</con:value>
+        </con:property>
+      </con:properties>
+    </con:testCase>
+    <con:properties />
+  </con:testSuite>
+  <con:properties />
+  <con:wssContainer />
+  <con:oAuth2ProfileContainer />
+  <con:oAuth1ProfileContainer />
+</con:soapui-project>
